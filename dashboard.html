@@ -60,7 +60,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .btn-update:disabled { opacity:.5; cursor:not-allowed; }
 
 /* ─── Metric tabs ─── */
-.mtabs { background:#fff; border-bottom:1px solid #e5e7eb; padding:0 16px;
+.mtabs { background:#fff; border-bottom:1px solid #e5e7eb; padding:0 16px 0 306px;
          display:flex; gap:0; position:sticky; top:96px; z-index:100; overflow-x:auto; }
 .mtab { border:none; background:none; color:#6b7280; font-size:12px; font-weight:600;
         padding:9px 14px; cursor:pointer; border-bottom:2px solid transparent;
@@ -71,8 +71,47 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 /* ─── Outer layout ─── */
 .outer { display:flex; align-items:flex-start; gap:0; padding:0; min-height:calc(100vh - 136px); }
 
-/* ─── Main panel ─── */
-.main { flex:1; padding:14px 16px; min-width:0; overflow-x:clip; }
+/* ─── Revenue Ranking Panel (left fixed) ─── */
+.rank-panel {
+  position:fixed; left:0; top:96px; /* JS가 실제값으로 덮어씀 */
+  width:290px; height:calc(100vh - 96px);
+  background:#fff; border-right:1px solid #e5e7eb;
+  z-index:150; display:flex; flex-direction:column;
+  box-shadow:2px 0 8px rgba(0,0,0,.06);
+}
+.rank-panel-hdr {
+  padding:9px 12px 7px; border-bottom:1px solid #f3f4f6;
+  font-size:12px; font-weight:800; color:#374151; letter-spacing:.2px;
+  display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+}
+.rank-panel-week { font-size:10px; font-weight:600; color:#9ca3af; }
+.rank-panel-body { overflow-y:auto; flex:1; scrollbar-width:thin; scrollbar-color:#e5e7eb transparent; }
+.rank-panel-body::-webkit-scrollbar { width:5px; }
+.rank-panel-body::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:3px; }
+.rank-tbl { width:100%; border-collapse:collapse; }
+.rank-tbl thead th {
+  position:sticky; top:0; background:#f8fafc;
+  font-size:10px; font-weight:700; color:#9ca3af; letter-spacing:.3px;
+  padding:5px 4px; text-align:center; border-bottom:1px solid #efefef;
+}
+.rank-tbl thead th:first-child { text-align:left; padding-left:10px; }
+.rank-tbl thead th:nth-child(2) { text-align:right; padding-right:8px; }
+.rank-tbl tbody tr { border-bottom:1px solid #f5f5f5; cursor:pointer; transition:.1s; }
+.rank-tbl tbody tr:hover { background:#f0f4ff; }
+.rank-tbl tbody tr.rank-active { background:#eff6ff; }
+.rank-tbl td { padding:6px 4px; text-align:center; color:#374151; white-space:nowrap; }
+.rank-tbl td:first-child { text-align:left; padding-left:10px; }
+.rank-tbl td:nth-child(2) { text-align:right; padding-right:8px; }
+.rank-num { color:#c0c8d4; font-size:10px; font-weight:700; margin-right:4px; min-width:18px; display:inline-block; text-align:right; }
+.rank-name { font-weight:600; font-size:11px; color:#111827; }
+.rank-rev { font-weight:700; font-size:11px; color:#0064FF; white-space:nowrap; }
+.rank-chg { font-size:10px; font-weight:700; white-space:nowrap; }
+.rank-chg.up { color:#16a34a; }
+.rank-chg.dn { color:#dc2626; }
+.rank-chg.flat { color:#9ca3af; }
+
+/* main에 왼쪽 여백 추가 */
+.main { flex:1; padding:14px 16px 14px 306px; min-width:0; overflow-x:clip; }
 
 /* ─── Chat sidebar ─── */
 .chat-sidebar {
@@ -182,6 +221,39 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 @media(max-width:900px) { .chart-grid.cols2 { grid-template-columns:1fr; } }
 
 /* ─── Region breakdown ─── */
+/* ─── Jump Tables ─── */
+.jump-section { margin-top:20px; padding-top:14px; border-top:2px solid #e5e7eb; }
+.jump-section-hdr { font-size:13px; font-weight:800; color:#374151; margin-bottom:8px;
+                    letter-spacing:-.01em; }
+.jump-tables-wrap { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; align-items:start; }
+.jump-card { background:#fff; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,.07); overflow:hidden; }
+.jump-card-hdr { font-size:12px; font-weight:800; color:#111827; padding:7px 10px 6px;
+                 border-bottom:1px solid #f0f0f0; }
+.jump-card-body { display:flex; flex-direction:column; gap:0; }
+.jump-group { border-bottom:1px solid #f5f5f5; }
+.jump-group:last-child { border-bottom:none; }
+.jump-group-lbl { font-size:10px; font-weight:800; color:#6b7280; letter-spacing:.4px;
+                  padding:4px 10px 3px; background:#f8fafc; border-bottom:1px solid #f0f0f0; }
+.jump-tbl { width:100%; border-collapse:collapse; font-size:11px; }
+.jump-period-hdr { font-size:10px; font-weight:700; color:#6b7280; padding:4px 8px 3px;
+                   text-align:left; background:#f8fafc; border-bottom:1px solid #efefef; }
+.jump-tbl thead tr:last-child th { font-size:9px; font-weight:700; color:#c0c8d4;
+                   padding:2px 6px; text-align:right; border-bottom:1px solid #f0f0f0; }
+.jump-tbl thead tr:last-child th:first-child,
+.jump-tbl thead tr:last-child th:nth-child(4) { text-align:left; }
+.jump-tbl tbody tr { border-bottom:1px solid #fafafa; }
+.jump-tbl tbody tr:last-child { border-bottom:none; }
+.jump-tbl td, .jump-tbl th { vertical-align:middle; }
+.jump-name { padding:3px 6px; color:#111827; font-weight:600; white-space:nowrap;
+             overflow:hidden; text-overflow:ellipsis; max-width:110px; }
+.jump-chg  { padding:3px 6px; text-align:right; font-weight:700; white-space:nowrap; }
+.jump-val  { padding:3px 6px; text-align:right; color:#6b7280; white-space:nowrap; }
+.jump-up   { color:#16a34a; }
+.jump-dn   { color:#dc2626; }
+.jump-empty { color:#9ca3af; font-size:11px; padding:6px 10px; }
+.jc-sep    { border-left:1px solid #e5e7eb !important; }
+.jc-dim    { color:#d1d5db; }
+
 .region-breakdown { background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.08);
                     margin-top:14px; overflow:hidden; }
 .region-breakdown-hdr { font-size:13px; font-weight:700; color:#111827; padding:14px 16px 12px;
@@ -296,6 +368,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 @media(max-width:768px) {
   .chat-sidebar { display:none; }
   .outer { flex-direction:column; }
+  .rank-panel { display:none; }
+  .main { padding-left:16px; }
+  .mtabs { padding-left:16px; }
 }
 </style>
 </head>
@@ -356,6 +431,31 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
   <button class="mtab" onclick="setMetric('waytype',this)">🔀 Way Type</button>
   <button class="mtab" onclick="setMetric('demand',this)">📊 수요</button>
   <button class="mtab" onclick="setMetric('cost',this)">💸 비용</button>
+</div>
+
+<!-- Revenue Ranking Panel -->
+<div class="rank-panel" id="rankPanel">
+  <div class="rank-panel-hdr">
+    <span>총매출 Ranking 👑</span>
+    <span class="rank-panel-week" id="rankWeekLabel"></span>
+  </div>
+  <div class="rank-panel-body">
+    <table class="rank-tbl">
+      <colgroup>
+        <col style="width:116px">
+        <col style="width:68px">
+        <col style="width:48px">
+        <col style="width:48px">
+      </colgroup>
+      <thead><tr>
+        <th>지역</th>
+        <th>매출</th>
+        <th>WoW</th>
+        <th>YoY</th>
+      </tr></thead>
+      <tbody id="rankTbody"></tbody>
+    </table>
+  </div>
 </div>
 
 <!-- Outer layout -->
@@ -434,10 +534,10 @@ const METRICS = {
       { key:'zone_count',   label:'운영 존',       fmt:'cnt', unit:'개', ac:'#94a3b8' },
     ],
     charts: [
-      { keys:['rev_per_car'], label:'대당매출 (원)', fmt:'krw',    colors:['#0064FF'] },
-      { keys:['gpm'],         label:'GPM (%)',        fmt:'pct100', colors:['#10b981'] },
-      { keys:['revenue'],     label:'총매출 (원)',    fmt:'krw',    colors:['#6366f1'] },
-      { keys:['opr_weekday'], label:'가동률 (%)', fmt:'pct100', colors:['#3b82f6'], utilToggle:true },
+      { keys:['rev_per_car'], label:'대당매출 (원)',      fmt:'num',    colors:['#0064FF'] },
+      { keys:['use_count'],   label:'이용 건수 (건)',     fmt:'num',    colors:['#6366f1'] },
+      { keys:['car_count'],   label:'운영 대수 (대)',     fmt:'num',    colors:['#64748b'] },
+      { keys:['opr_weekday'], label:'가동/사전가동 (%)', fmt:'pct100', colors:['#3b82f6'], utilToggle:true },
     ],
   },
   waytype: {
@@ -674,6 +774,7 @@ function fmt(v, f) {
     case 'pct':    return (v*100).toFixed(1) + '%';
     case 'pct100': return (v*100).toFixed(1) + '%';
     case 'cnt':    return Math.round(v).toLocaleString('ko-KR');
+    case 'num':    return Math.round(v).toLocaleString('ko-KR');
     case 'hr':     return v.toFixed(1);
     default:       return String(v);
   }
@@ -690,6 +791,7 @@ function fmtAxis(v, f) {
     case 'cnt':
       if (Math.abs(v) >= 1e4) return (v/1e3).toFixed(0) + 'K';
       return v.toFixed(0);
+    case 'num':    return Math.round(v).toLocaleString('ko-KR');
     case 'hr': return v.toFixed(1) + 'h';
     default:   return String(v);
   }
@@ -717,10 +819,94 @@ function tdChg(chg) {
 /* ═══════════════════════════════════════════
    Render
 ═══════════════════════════════════════════ */
+function adjustRankPanelTop() {
+  const hdr   = document.querySelector('.hdr');
+  const ctrl  = document.querySelector('.ctrl');
+  const panel = document.getElementById('rankPanel');
+  if (!panel) return;
+  const top = (hdr?.offsetHeight || 52) + (ctrl?.offsetHeight || 44);
+  panel.style.top    = top + 'px';
+  panel.style.height = `calc(100vh - ${top}px)`;
+}
+
+function renderRankPanel() {
+  adjustRankPanelTop();
+  if (!D?.weekly_region2?.length) return;
+
+  // 최신 주차 now 데이터
+  const nowRows = D.weekly_region2.filter(r => r.period_type === 'now');
+  const allWeeks = [...new Set(nowRows.map(r => r.isoyear * 100 + r.isoweek))].sort((a,b)=>a-b);
+  if (!allWeeks.length) return;
+  const latestKey = allWeeks.at(-1);
+  const prevKey   = allWeeks.at(-2);
+  const latestYear = Math.floor(latestKey / 100), latestWeek = latestKey % 100;
+
+  const nowMap  = {}, prevMap = {}, yoyMap = {};
+  for (const r of D.weekly_region2) {
+    const k = r.isoyear * 100 + r.isoweek;
+    const name = r.region || '';
+    if (!name) continue;
+    if (r.period_type === 'now' && k === latestKey) nowMap[name]  = r;
+    if (r.period_type === 'now' && k === prevKey)   prevMap[name] = r;
+    if (r.period_type === 'yoy' && r.isoweek === latestWeek && r.isoyear < latestYear) yoyMap[name] = r;
+  }
+
+  // 매출 내림차순 정렬
+  const rows = Object.entries(nowMap)
+    .sort((a,b) => (b[1].revenue||0) - (a[1].revenue||0));
+
+  const fmtRev = v => {
+    if (v == null) return '-';
+    if (v >= 1e8) return (v/1e8).toFixed(1) + '억';
+    if (v >= 1e4) return Math.round(v/1e4).toLocaleString() + '만';
+    return Math.round(v).toLocaleString() + '원';
+  };
+  const fmtChg = (now, base) => {
+    if (now == null || !base) return { txt:'-', cls:'flat' };
+    const c = (now - base) / Math.abs(base) * 100;
+    return { txt: (c>0?'+':'')+c.toFixed(1)+'%', cls: c>0?'up':c<0?'dn':'flat' };
+  };
+
+  document.getElementById('rankWeekLabel').textContent = `W${latestWeek}`;
+
+  const tbody = document.getElementById('rankTbody');
+  tbody.innerHTML = rows.map(([name, r], i) => {
+    const wow = fmtChg(r.revenue, prevMap[name]?.revenue);
+    const yoy = fmtChg(r.revenue, yoyMap[name]?.revenue);
+    const isActive = (region === name) ? ' class="rank-active"' : '';
+    // 지역명 22자 이상 시 줄임
+    const cleanName = name.replace(/\u3000/g, ' ').replace(/\s+/g, ' ').trim();
+    const displayName = cleanName.length > 10 ? cleanName.slice(0,10)+'…' : cleanName;
+    return `<tr${isActive} onclick="selectRankRegion('${name.replace(/'/g,"\\'")}')">
+      <td><span class="rank-num">${i+1}</span><span class="rank-name">${displayName}</span></td>
+      <td class="rank-rev">${fmtRev(r.revenue)}</td>
+      <td class="rank-chg ${wow.cls}">${wow.txt}</td>
+      <td class="rank-chg ${yoy.cls}">${yoy.txt}</td>
+    </tr>`;
+  }).join('');
+}
+
+function selectRankRegion(name) {
+  // region2 버튼이 있으면 클릭, 없으면 직접 setRegion2
+  const btn = document.querySelector(`#r2Btns .rbtn[data-val="${name}"]`);
+  if (btn) { btn.click(); return; }
+  // 해당 지역의 region1 찾기
+  const row = D?.weekly_region2?.find(r => r.region === name && r.period_type === 'now');
+  if (row) {
+    const r1 = row.region1?.includes('강원') ? '강원도' : '경기도';
+    setR1(r1);
+    setTimeout(() => {
+      const b2 = document.querySelector(`#r2Btns .rbtn[data-val="${name}"]`);
+      if (b2) b2.click();
+    }, 50);
+  }
+}
+
 function render() {
   destroyCharts();
   if (!D) return;
   if (D.generated_at) document.getElementById('hdrUpdated').textContent = '기준: ' + D.generated_at;
+  renderRankPanel();
 
   const weekly = getWeeklyData();
   if (!weekly.length) {
@@ -812,9 +998,157 @@ function render() {
     <div class="metric-section">
       <div class="chart-grid ${chartCols}">${chartsHtml}</div>
     </div>
+    ${buildJumpTables()}
     ${regionBreakdownHtml}`;
 
   mg.charts.forEach((c, i) => drawChart(`ch${i}`, c, ds));
+}
+
+/* ─── Jump Tables (대당매출 / 이용건수 점프 지역) ─── */
+function buildJumpTables() {
+  if (metric !== 'revenue') return '';
+  const numFmt = v => Math.round(v).toLocaleString('ko-KR');
+
+  // region2 선택 시 → region3 데이터 사용
+  if (regionLevel === 2) {
+    return buildJumpTablesFromR3(numFmt);
+  }
+  // 전체 / region1 선택 → region2 데이터 사용
+  return buildJumpTablesFromR2(numFmt);
+}
+
+function _buildJumpMaps(rows) {
+  const nowRows = rows.filter(r => r.period_type === 'now');
+  const allKeys = [...new Set(nowRows.map(r => r.isoyear * 100 + r.isoweek))].sort((a,b)=>a-b);
+  if (allKeys.length < 2) return null;
+  const latestKey = allKeys.at(-1);
+  const prevKey   = allKeys.at(-2);
+  const latestYear = Math.floor(latestKey/100), latestWeek = latestKey % 100;
+  const nowMap = {}, prevMap = {}, yoyMap = {};
+  for (const r of rows) {
+    const k = r.isoyear * 100 + r.isoweek;
+    const name = r.region; if (!name) continue;
+    if (r.period_type === 'now' && k === latestKey) nowMap[name] = r;
+    if (r.period_type === 'now' && k === prevKey)   prevMap[name] = r;
+    if (r.period_type === 'yoy' && r.isoweek === latestWeek && r.isoyear < latestYear) yoyMap[name] = r;
+  }
+  return { nowMap, prevMap, yoyMap };
+}
+
+function _top5(nowMap, baseMap, key, filterFn) {
+  return Object.entries(nowMap)
+    .filter(([, r]) => !filterFn || filterFn(r))
+    .map(([name, r]) => {
+      const base = baseMap[name]?.[key], cur = r[key];
+      if (cur == null || base == null || base === 0) return null;
+      return { name, chg: (cur - base) / Math.abs(base) * 100, val: cur };
+    })
+    .filter(Boolean).sort((a,b) => b.chg - a.chg).slice(0, 5);
+}
+
+function _mergedGroupHtml(wowRows, yoyRows, numFmt) {
+  const maxLen = Math.max(wowRows.length, yoyRows.length, 1);
+  const wowCell = (r, i) => {
+    if (!r) return `<td class="jump-name jc-dim">—</td><td class="jump-chg">—</td><td class="jump-val">—</td>`;
+    const nm = r.name.replace(/\u3000/g,' ').replace(/\s+/g,' ').trim();
+    return `<td class="jump-name">${i+1}. ${nm}</td>
+            <td class="jump-chg ${r.chg>=0?'jump-up':'jump-dn'}">${r.chg>0?'+':''}${r.chg.toFixed(1)}%</td>
+            <td class="jump-val">${numFmt(r.val)}</td>`;
+  };
+  const yoyCell = (r, i) => {
+    if (!r) return `<td class="jump-name jc-sep jc-dim">—</td><td class="jump-chg">—</td><td class="jump-val">—</td>`;
+    const nm = r.name.replace(/\u3000/g,' ').replace(/\s+/g,' ').trim();
+    return `<td class="jump-name jc-sep">${i+1}. ${nm}</td>
+            <td class="jump-chg ${r.chg>=0?'jump-up':'jump-dn'}">${r.chg>0?'+':''}${r.chg.toFixed(1)}%</td>
+            <td class="jump-val">${numFmt(r.val)}</td>`;
+  };
+  return `<table class="jump-tbl">
+    <colgroup>
+      <col style="width:28%"><col style="width:12%"><col style="width:10%">
+      <col style="width:28%"><col style="width:12%"><col style="width:10%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="3" class="jump-period-hdr">WoW</th>
+        <th colspan="3" class="jump-period-hdr jc-sep">YoY</th>
+      </tr>
+      <tr>
+        <th style="text-align:left">지역</th><th>상승률</th><th>수치</th>
+        <th class="jc-sep" style="text-align:left">지역</th><th>상승률</th><th>수치</th>
+      </tr>
+    </thead>
+    <tbody>${Array.from({length: maxLen}, (_,i) =>
+      `<tr>${wowCell(wowRows[i], i)}${yoyCell(yoyRows[i], i)}</tr>`
+    ).join('')}</tbody>
+  </table>`;
+}
+
+function buildJumpTablesFromR2(numFmt) {
+  const r2data = D.weekly_region2 || [];
+  if (!r2data.length) return '';
+  const maps = _buildJumpMaps(r2data);
+  if (!maps) return '';
+  const { nowMap, prevMap, yoyMap } = maps;
+
+  const matchR1 = (rowR1, target) =>
+    target === '강원도' ? (rowR1||'').includes('강원') : (rowR1||'').includes('경기');
+
+  // 전체일 때: 경기/강원 분리. region1 선택 시: 해당 도만 단일 그룹
+  const groups = regionLevel === 0
+    ? ['경기도', '강원도']
+    : [region]; // '경기도' or '강원도'
+
+  const cardHtml = (label, key) => `
+    <div class="jump-card">
+      <div class="jump-card-hdr">📈 ${label}</div>
+      <div class="jump-card-body">
+        ${groups.map(r1 => {
+          const filter = regionLevel === 0 ? r => matchR1(r.region1, r1) : null;
+          return `<div class="jump-group">
+            ${groups.length > 1 ? `<div class="jump-group-lbl">${r1}</div>` : ''}
+            <div style="padding:4px 0">
+              ${_mergedGroupHtml(_top5(nowMap, prevMap, key, filter), _top5(nowMap, yoyMap, key, filter), numFmt)}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  return `<div class="jump-section">
+    <div class="jump-section-hdr">⚡ 주간 점프 지역</div>
+    <div class="jump-tables-wrap">
+      ${cardHtml('대당 매출 점프 Top 5', 'rev_per_car')}
+      ${cardHtml('이용 건수 점프 Top 5', 'use_count')}
+    </div>
+  </div>`;
+}
+
+function buildJumpTablesFromR3(numFmt) {
+  const r3data = (D.weekly_region3 || []).filter(r => r.region2_parent === region);
+  if (!r3data.length) return '';
+  const maps = _buildJumpMaps(r3data);
+  if (!maps) return '';
+  const { nowMap, prevMap, yoyMap } = maps;
+
+  const cardHtml = (label, key) => `
+    <div class="jump-card">
+      <div class="jump-card-hdr">📈 ${label} (${region} 읍면동)</div>
+      <div class="jump-card-body">
+        <div class="jump-group">
+          <div style="padding:4px 0">
+            ${_mergedGroupHtml(_top5(nowMap, prevMap, key, null), _top5(nowMap, yoyMap, key, null), numFmt)}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  return `<div class="jump-section">
+    <div class="jump-section-hdr">⚡ 주간 점프 읍면동 (${region})</div>
+    <div class="jump-tables-wrap">
+      ${cardHtml('대당 매출 점프 Top 5', 'rev_per_car')}
+      ${cardHtml('이용 건수 점프 Top 5', 'use_count')}
+    </div>
+  </div>`;
 }
 
 /* ─── Table builder ─── */
@@ -858,7 +1192,7 @@ function buildTable(cfg, ds, chartIdx) {
   }
 
   // 사전가동률 행 추가 (utilToggle 차트에만)
-  if (cfg.utilToggle && period !== 'monthly' && D?.advance_util?.meta) {
+  if (cfg.utilToggle && period === 'weekly' && D?.advance_util?.meta) {
     const au = D.advance_util;
     const meta = au.meta || {};
     const dayKey = key0 === 'opr_weekday' ? 'weekday' : 'weekend';
@@ -1215,7 +1549,7 @@ function drawChart(id, cfg, ds) {
 
   // 사전가동률 연장 (utilToggle 차트, weekly/ytd 모드)
   let chartLabels = [...ds.labels];
-  if (cfg.utilToggle && period !== 'monthly' && D?.advance_util?.meta) {
+  if (cfg.utilToggle && period === 'weekly' && D?.advance_util?.meta) {
     const au = D.advance_util;
     const meta = au.meta || {};
     const dayKey = cfg.keys[0] === 'opr_weekday' ? 'weekday' : 'weekend';
@@ -2264,6 +2598,8 @@ function buildFreePrompt(userText) {
 /* ─── Init ─── */
 loadAiConfig();
 load();
+// 헤더 높이 변경(창 크기 조절, 지역 펼침 등) 시 패널 위치 재계산
+new ResizeObserver(adjustRankPanelTop).observe(document.querySelector('.ctrl') || document.body);
 </script>
 </body>
 </html>

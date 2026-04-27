@@ -1,3 +1,5 @@
-127.0.0.1 - - [23/Apr/2026 16:05:34] "GET /api/ai-config HTTP/1.1" 200 -
-127.0.0.1 - - [23/Apr/2026 16:05:34] "GET /api/dashboard?team_id=gyeonggi HTTP/1.1" 200 -
-127.0.0.1 - - [23/Apr/2026 16:09:47] "POST /api/dashboard-analyze HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 08:45:54] "GET /api/dashboard?team_id=gyeonggi HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 08:45:58] "GET /api/ai-config HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 08:49:17] "POST /api/update-zone HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 08:49:17] "GET /api/dashboard?team_id=gyeonggi HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 08:51:39] "GET /api/status HTTP/1.1" 200 -
