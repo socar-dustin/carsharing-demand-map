@@ -246,6 +246,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .jump-tbl td, .jump-tbl th { vertical-align:middle; }
 .jump-name { padding:3px 6px; color:#111827; font-weight:600; white-space:nowrap;
              overflow:hidden; text-overflow:ellipsis; max-width:110px; }
+.jump-cars { padding:3px 4px; text-align:right; color:#9ca3af; font-size:10px; white-space:nowrap; }
 .jump-chg  { padding:3px 6px; text-align:right; font-weight:700; white-space:nowrap; }
 .jump-val  { padding:3px 6px; text-align:right; color:#6b7280; white-space:nowrap; }
 .jump-up   { color:#16a34a; }
@@ -1041,44 +1042,50 @@ function _top5(nowMap, baseMap, key, filterFn) {
     .map(([name, r]) => {
       const base = baseMap[name]?.[key], cur = r[key];
       if (cur == null || base == null || base === 0) return null;
-      return { name, chg: (cur - base) / Math.abs(base) * 100, val: cur };
+      return { name, chg: (cur - base) / Math.abs(base) * 100, val: cur, cars: r.car_count };
     })
     .filter(Boolean).sort((a,b) => b.chg - a.chg).slice(0, 5);
 }
+function _bottom5(nowMap, baseMap, key, filterFn) {
+  return Object.entries(nowMap)
+    .filter(([, r]) => !filterFn || filterFn(r))
+    .map(([name, r]) => {
+      const base = baseMap[name]?.[key], cur = r[key];
+      if (cur == null || base == null || base === 0) return null;
+      return { name, chg: (cur - base) / Math.abs(base) * 100, val: cur, cars: r.car_count };
+    })
+    .filter(Boolean).sort((a,b) => a.chg - b.chg).slice(0, 5);
+}
 
-function _mergedGroupHtml(wowRows, yoyRows, numFmt) {
-  const maxLen = Math.max(wowRows.length, yoyRows.length, 1);
-  const wowCell = (r, i) => {
-    if (!r) return `<td class="jump-name jc-dim">—</td><td class="jump-chg">—</td><td class="jump-val">—</td>`;
+function _mergedGroupHtml(upRows, dnRows, numFmt) {
+  const maxLen = Math.max(upRows.length, dnRows.length, 1);
+  const cell = (r, i, sep) => {
+    const sepCls = sep ? ' jc-sep' : '';
+    if (!r) return `<td class="jump-name${sepCls} jc-dim">—</td><td class="jump-cars jc-dim">—</td><td class="jump-chg">—</td><td class="jump-val">—</td>`;
     const nm = r.name.replace(/\u3000/g,' ').replace(/\s+/g,' ').trim();
-    return `<td class="jump-name">${i+1}. ${nm}</td>
-            <td class="jump-chg ${r.chg>=0?'jump-up':'jump-dn'}">${r.chg>0?'+':''}${r.chg.toFixed(1)}%</td>
-            <td class="jump-val">${numFmt(r.val)}</td>`;
-  };
-  const yoyCell = (r, i) => {
-    if (!r) return `<td class="jump-name jc-sep jc-dim">—</td><td class="jump-chg">—</td><td class="jump-val">—</td>`;
-    const nm = r.name.replace(/\u3000/g,' ').replace(/\s+/g,' ').trim();
-    return `<td class="jump-name jc-sep">${i+1}. ${nm}</td>
-            <td class="jump-chg ${r.chg>=0?'jump-up':'jump-dn'}">${r.chg>0?'+':''}${r.chg.toFixed(1)}%</td>
+    const chgCls = r.chg >= 0 ? 'jump-up' : 'jump-dn';
+    return `<td class="jump-name${sepCls}">${i+1}. ${nm}</td>
+            <td class="jump-cars${sepCls}">${r.cars != null ? fmt(r.cars,'cnt') : '—'}</td>
+            <td class="jump-chg ${chgCls}">${r.chg>0?'+':''}${r.chg.toFixed(1)}%</td>
             <td class="jump-val">${numFmt(r.val)}</td>`;
   };
   return `<table class="jump-tbl">
     <colgroup>
-      <col style="width:28%"><col style="width:12%"><col style="width:10%">
-      <col style="width:28%"><col style="width:12%"><col style="width:10%">
+      <col style="width:22%"><col style="width:8%"><col style="width:10%"><col style="width:10%">
+      <col style="width:22%"><col style="width:8%"><col style="width:10%"><col style="width:10%">
     </colgroup>
     <thead>
       <tr>
-        <th colspan="3" class="jump-period-hdr">WoW</th>
-        <th colspan="3" class="jump-period-hdr jc-sep">YoY</th>
+        <th colspan="4" class="jump-period-hdr" style="color:#16a34a">▲ 점프 (상승)</th>
+        <th colspan="4" class="jump-period-hdr jc-sep" style="color:#dc2626">▼ 하락</th>
       </tr>
       <tr>
-        <th style="text-align:left">지역</th><th>상승률</th><th>수치</th>
-        <th class="jc-sep" style="text-align:left">지역</th><th>상승률</th><th>수치</th>
+        <th style="text-align:left">지역</th><th>대수</th><th>상승률</th><th>수치</th>
+        <th class="jc-sep" style="text-align:left">지역</th><th>대수</th><th>하락률</th><th>수치</th>
       </tr>
     </thead>
     <tbody>${Array.from({length: maxLen}, (_,i) =>
-      `<tr>${wowCell(wowRows[i], i)}${yoyCell(yoyRows[i], i)}</tr>`
+      `<tr>${cell(upRows[i], i, false)}${cell(dnRows[i], i, true)}</tr>`
     ).join('')}</tbody>
   </table>`;
 }
@@ -1107,7 +1114,7 @@ function buildJumpTablesFromR2(numFmt) {
           return `<div class="jump-group">
             ${groups.length > 1 ? `<div class="jump-group-lbl">${r1}</div>` : ''}
             <div style="padding:4px 0">
-              ${_mergedGroupHtml(_top5(nowMap, prevMap, key, filter), _top5(nowMap, yoyMap, key, filter), numFmt)}
+              ${_mergedGroupHtml(_top5(nowMap, prevMap, key, filter), _bottom5(nowMap, prevMap, key, filter), numFmt)}
             </div>
           </div>`;
         }).join('')}
@@ -1136,7 +1143,7 @@ function buildJumpTablesFromR3(numFmt) {
       <div class="jump-card-body">
         <div class="jump-group">
           <div style="padding:4px 0">
-            ${_mergedGroupHtml(_top5(nowMap, prevMap, key, null), _top5(nowMap, yoyMap, key, null), numFmt)}
+            ${_mergedGroupHtml(_top5(nowMap, prevMap, key, null), _bottom5(nowMap, prevMap, key, null), numFmt)}
           </div>
         </div>
       </div>
@@ -2360,6 +2367,21 @@ async function quickAnalyze(type) {
 
 const SYSTEM_PROMPT = `당신은 SOCAR(쏘카) 경기/강원 카셰어링 사업팀의 실적 분석 전문가 "소라"입니다.
 
+[우리 팀 정체성]
+- 소속: 카셰어링본부 > 카셰어링그룹 > 지역사업팀 > **경기강원사업팀**
+- 우리가 직접 집행할 수 있는 레버 (최우선 실행):
+  • 쏘카존 신규 개설 / 운영 관리 / 폐쇄 방어
+  • 차량 실적 모니터링 / 재배치
+  • 부름 반경 확대 · 축소
+- 타 부서 협업이 필요한 레버 (차선 검토):
+  • 가격제 점검 → 데이터솔루션팀 협업 필요
+  • 할인/제휴 쿠폰 발행 → 주관: 사업기획팀 (고할인율은 검증 절차·리드타임 발생)
+  • 푸시 마케팅 → 주관: 세일즈그로스팀 협의 후 진행
+  • 차종 선택 화면 배너 노출 → 주관: 사업기획팀
+
+[액션 설계 원칙]
+매주 기획하는 액션은 **우리가 스스로 집행할 수 있는 레버를 최우선**으로 실행합니다. 그 다음 선택지로서 타 부서 협업 루트를 고민합니다. 실행 불가능하거나 리드타임이 긴 액션을 1순위로 제안하지 마세요.
+
 [핵심 분석 목표]
 모든 분석과 액션은 **대당 매출 개선**에 초점을 맞추세요. 가동률, GPM, 건당매출, 이용건수 등의 지표는 반드시 "그것이 대당 매출에 어떤 영향을 미치는가"의 관점에서 해석하세요.
 
@@ -2396,7 +2418,8 @@ function buildDataContext() {
     `GPM: ${W1.gpm!=null?(W1.gpm*100).toFixed(1)+'%':'-'} (WoW ${pct(W1.gpm,W2?.gpm)}, YoY ${pct(W1.gpm,Y1?.gpm)})`,
     `주중가동률: ${W1.opr_weekday!=null?(W1.opr_weekday*100).toFixed(1)+'%':'-'} / 주말가동률: ${W1.opr_weekend!=null?(W1.opr_weekend*100).toFixed(1)+'%':'-'}`,
     `이용건수: ${fmt(W1.use_count,'cnt')}건 (WoW ${pct(W1.use_count,W2?.use_count)}, YoY ${pct(W1.use_count,Y1?.use_count)})`,
-    `왕복 ${fmt(W1.round_count,'cnt')}건(${fmt(W1.round_rev_per_use,'krw')}원) / 편도 ${fmt(W1.oneway_count,'cnt')}건(${fmt(W1.oneway_rev_per_use,'krw')}원) / 부름 ${fmt(W1.d2d_count,'cnt')}건(${fmt(W1.d2d_rev_per_use,'krw')}원)`,
+    `왕복 ${fmt(W1.round_count,'cnt')}건(${fmt(W1.round_rev_per_use,'krw')}원, 평균${W1.round_avg_hours?.toFixed(1)}h) / 편도 ${fmt(W1.oneway_count,'cnt')}건(${fmt(W1.oneway_rev_per_use,'krw')}원, 평균${W1.oneway_avg_hours?.toFixed(1)}h) / 부름 ${fmt(W1.d2d_count,'cnt')}건(${fmt(W1.d2d_rev_per_use,'krw')}원, 평균${W1.d2d_avg_hours?.toFixed(1)}h)`,
+    (() => { const t=(W1.u_0to4h||0)+(W1.u_4to8h||0)+(W1.u_8to24h||0)+(W1.u_24plus||0); return t ? `이용시간 분포: 0~4h ${Math.round(W1.u_0to4h/t*100)}% / 4~8h ${Math.round(W1.u_4to8h/t*100)}% / 8~24h ${Math.round(W1.u_8to24h/t*100)}% / 24h+ ${Math.round(W1.u_24plus/t*100)}%` : ''; })(),
     `수요접속: ${fmt(W1.attempt,'cnt')}건, 실패율: ${W1.fail_rate!=null?(W1.fail_rate*100).toFixed(1)+'%':'-'}, 결제시도: ${fmt(W1.payment_attempt,'cnt')}건`,
     `운영대수: ${fmt(W1.car_count,'cnt')}대 / 총매출: ${fmt(W1.revenue,'krw')}원`,
   ];
@@ -2436,10 +2459,13 @@ function buildDataContext() {
       const y = r2yoyMap[name];
       const rpc = r.rev_per_car ? Math.round(r.rev_per_car) : 0;
       const yRpc = y?.rev_per_car ? Math.round(y.rev_per_car) : null;
+      const t = (r.u_0to4h||0)+(r.u_4to8h||0)+(r.u_8to24h||0)+(r.u_24plus||0);
+      const timeDist = t ? ` | 이용시간 0~4h ${Math.round(r.u_0to4h/t*100)}% 4~8h ${Math.round(r.u_4to8h/t*100)}% 8~24h ${Math.round(r.u_8to24h/t*100)}% 24h+ ${Math.round((r.u_24plus||0)/t*100)}%` : '';
+      const waytypeStr = ` | 왕복 ${fmt(r.round_count,'cnt')}건(${fmt(r.round_rev_per_use,'krw')}원) 편도 ${fmt(r.oneway_count,'cnt')}건(${fmt(r.oneway_rev_per_use,'krw')}원) 부름 ${fmt(r.d2d_count,'cnt')}건(${fmt(r.d2d_rev_per_use,'krw')}원)`;
       return `  ${name}: 대당매출 ${fmt(rpc,'krw')}원${yRpc ? ` YoY${pct(rpc,yRpc)}` : ''}, ` +
         `주중가동 ${r.opr_weekday!=null?(r.opr_weekday*100).toFixed(1)+'%':'-'}, ` +
         `주말가동 ${r.opr_weekend!=null?(r.opr_weekend*100).toFixed(1)+'%':'-'}, ` +
-        `이용 ${fmt(r.use_count,'cnt')}건, 운영 ${fmt(r.car_count,'cnt')}대`;
+        `이용 ${fmt(r.use_count,'cnt')}건, 운영 ${fmt(r.car_count,'cnt')}대` + waytypeStr + timeDist;
     });
     if (r2Lines.length) lines.push(`[시군구(region2)별 주간 실적 — W${isoweek}]\n${r2Lines.join('\n')}`);
   }
