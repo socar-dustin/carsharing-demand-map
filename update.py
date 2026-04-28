@@ -3067,7 +3067,7 @@ ZONE_JS = """
             left += '<div class="popup-section"><div class="popup-section-title">실적 <span style="font-weight:400;font-size:10px;color:#8890a4;margin-left:4px;">최근 4주</span></div>' +
                 '<div class="popup-row"><span class="popup-label">존 매출(4주)</span><b>' + fmtNum(z.total_revenue) + '원</b></div>' +
                 '<div class="popup-row"><span class="popup-label">대당 매출</span><b>' + fmtNum(z.revenue_per_car_28d) + '원</b></div>' +
-                '<div class="popup-row"><span class="popup-label">대당 GP</span><b>' + fmtNum(z.gp_per_car_28d) + '원</b></div>' +
+                '<div class="popup-row"><span class="popup-label">대당 GP</span><b style="color:' + (z.gp_per_car_28d < 0 ? '#e53935' : 'inherit') + '">' + fmtNum(z.gp_per_car_28d) + '원</b></div>' +
                 '<div class="popup-row"><span class="popup-label">가동률</span><b>' + (z.utilization_rate || 0).toFixed(1) + '%</b></div>' +
                 '</div>';
         }
@@ -3110,7 +3110,7 @@ ZONE_JS = """
                     right += '<div class="popup-section"><div class="popup-section-title" style="color:#1565c0;">실적 <span style="font-weight:400;font-size:10px;color:#8890a4;margin-left:4px;">최근 4주</span></div>' +
                         '<div class="popup-row"><span class="popup-label">존 매출(4주)</span><b>' + fmtNum(ev.total_revenue) + '원</b></div>' +
                         '<div class="popup-row"><span class="popup-label">대당 매출</span><b>' + fmtNum(ev.revenue_per_car_28d) + '원</b></div>' +
-                        '<div class="popup-row"><span class="popup-label">대당 GP</span><b>' + fmtNum(ev.gp_per_car_28d) + '원</b></div>' +
+                        '<div class="popup-row"><span class="popup-label">대당 GP</span><b style="color:' + (ev.gp_per_car_28d < 0 ? '#e53935' : 'inherit') + '">' + fmtNum(ev.gp_per_car_28d) + '원</b></div>' +
                         '<div class="popup-row"><span class="popup-label">가동률</span><b>' + (ev.utilization_rate || 0).toFixed(1) + '%</b></div>' +
                         '</div>';
                 }
@@ -3974,7 +3974,7 @@ var reentryPopup = function(z) {{
         '<div class="popup-row"><span class="popup-label">운영일수</span><span><b>' + z.operation_days + '</b>일</span></div>' +
         '<div class="popup-row"><span class="popup-label">가동률</span><span><b>' + z.utilization_rate + '</b>%</span></div>' +
         '<div class="popup-row"><span class="popup-label">대당 매출</span><span><b style="color:#0064FF">' + (z.revenue_per_car_28d||0).toLocaleString() + '</b>원/28일</span></div>' +
-        '<div class="popup-row"><span class="popup-label">대당 GP</span><span><b>' + (z.gp_per_car_28d||0).toLocaleString() + '</b>원/28일</span></div>';
+        '<div class="popup-row"><span class="popup-label">대당 GP</span><span><b style="color:' + (z.gp_per_car_28d < 0 ? '#e53935' : 'inherit') + '">' + (z.gp_per_car_28d||0).toLocaleString() + '</b>원/28일</span></div>';
 }};
 var reentryMarkerMap = {{}};
 reentryData.forEach(function(z) {{
@@ -4096,7 +4096,7 @@ closedData.forEach(function(cz) {{
     var perfHtml = '';
     if (cz.revenue_per_car_28d > 0) {{
         perfHtml = '<div class="popup-row"><span class="popup-label">대당매출(4주)</span><b style="color:#ffb74d">' + cz.revenue_per_car_28d.toLocaleString() + '원</b></div>' +
-            '<div class="popup-row"><span class="popup-label">대당GP(4주)</span><b>' + cz.gp_per_car_28d.toLocaleString() + '원</b></div>' +
+            '<div class="popup-row"><span class="popup-label">대당GP(4주)</span><b style="color:' + (cz.gp_per_car_28d < 0 ? '#e53935' : 'inherit') + '">' + cz.gp_per_car_28d.toLocaleString() + '원</b></div>' +
             '<div class="popup-row"><span class="popup-label">가동률</span><span>' + (cz.utilization_rate > 0 ? cz.utilization_rate.toFixed(1) + '%' : '-') + '</span></div>';
     }} else {{
         perfHtml = '<div class="popup-row"><span class="popup-label">실적</span><span style="color:#888">데이터 없음</span></div>';
