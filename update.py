@@ -5508,6 +5508,36 @@ def _build_html(team_id='gyeonggi'):
         parking_contract = {int(k): v for k, v in parking_contract.items()}
     timeline_data = _load_cache("timeline", team_id) or {}
 
+    # EV 데이터 로드 + 매칭
+    ev_data = _load_cache("ev_chargers", team_id) or []
+    ev_vz = _load_cache("ev_virtual_zones", team_id)
+    if isinstance(ev_vz, list): ev_vz = {}
+    ev_vz = ev_vz or {}
+    ev_cars = _load_cache("ev_car_zones", team_id)
+    if isinstance(ev_cars, list): ev_cars = {}
+    ev_cars = ev_cars or {}
+    for z in zones:
+        zid = int(z.get('zone_id', 0))
+        z['ev_zone'] = ev_vz.get(zid, ev_vz.get(str(zid)))
+        ec = ev_cars.get(zid, ev_cars.get(str(zid), {}))
+        z['ev_car_count'] = ec.get('ev_car_count', 0)
+        z['ev_charged_count'] = ec.get('ev_charged_count', 0)
+        z['has_ev'] = z['ev_car_count'] > 0 or z.get('ev_zone') is not None
+        z['has_charged_ev'] = z.get('ev_zone') is not None or '전기차' in z.get('zone_name', '')
+    ev_congestion = compute_ev_congestion()
+    for e in ev_data:
+        e['congestion'] = ev_congestion.get(e.get('statId'), None)
+    match_ev_to_zones(ev_data, zones)
+
+    # 재진입 추천구역
+    reentry_data = compute_reentry_zones(closed_data, access, reservation, zones_data=zones, team_id=team_id)
+    pc_map = {int(k): v for k, v in parking_contract.items()} if parking_contract else {}
+    for r in reentry_data:
+        pc = pc_map.get(int(r.get('zone_id', 0)), {})
+        r['provider_name'] = pc.get('provider_name', '')
+        r['settlement_type'] = pc.get('settlement_type', '')
+        r['price_per_car'] = pc.get('price_per_car', 0)
+
     # 히트맵: 행정구역 polygon 필터 + 동적 격자 수 제한
     access = filter_by_polygon(access, team_id)
     reservation = filter_by_polygon(reservation, team_id)
@@ -5520,7 +5550,7 @@ def _build_html(team_id='gyeonggi'):
     html = generate_index(access, reservation, zones, gaps, analysis, dtod, profit_data,
                           gcar_data=gcar_data, socar_supply=socar_supply,
                           parking_contract=parking_contract, timeline_data=timeline_data, closed_data=closed_data,
-                          team_id=team_id)
+                          reentry_data=reentry_data, ev_data=ev_data, team_id=team_id)
     out_dir = _team_output_dir(team_id)
     path = os.path.join(out_dir, "index.html")
     with open(path, "w") as f:

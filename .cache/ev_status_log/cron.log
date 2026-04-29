@@ -1667,3 +1667,74 @@
 [202604281310] 수집완료: 166929건 (29224개소), 충전중 16200, 대기중 140648 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
 [202604281320] 수집완료: 166929건 (29224개소), 충전중 16133, 대기중 140670 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
 [202604281330] 수집완료: 166929건 (29224개소), 충전중 16099, 대기중 140712 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281400] 수집완료: 166937건 (29227개소), 충전중 15968, 대기중 140864 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281430] 수집완료: 166949건 (29229개소), 충전중 16046, 대기중 140754 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281500] 수집완료: 166949건 (29229개소), 충전중 16018, 대기중 140817 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281530] 수집완료: 166950건 (29229개소), 충전중 16048, 대기중 140811 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281600] 수집완료: 166950건 (29229개소), 충전중 16357, 대기중 140515 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281635] 수집완료: 166965건 (29234개소), 충전중 16862, 대기중 140054 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281700] 수집완료: 166965건 (29234개소), 충전중 17619, 대기중 139299 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281730] API error (zcode=41, page=2): timed out
+[202604281730] 수집완료: 26937건 (6952개소), 충전중 2578, 대기중 22020 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281800] 수집완료: 166967건 (29235개소), 충전중 20361, 대기중 136520 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281830] 수집완료: 166969건 (29236개소), 충전중 22686, 대기중 134176 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281900] API error (zcode=41, page=2): timed out
+[202604281900] 수집완료: 26954건 (6954개소), 충전중 3596, 대기중 21005 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604281930] 수집완료: 167066건 (29244개소), 충전중 28864, 대기중 128010 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282000] 수집완료: 167066건 (29244개소), 충전중 31394, 대기중 125450 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282030] 수집완료: 167066건 (29244개소), 충전중 33627, 대기중 123218 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282100] 수집완료: 167066건 (29244개소), 충전중 35430, 대기중 121374 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282130] 수집완료: 167066건 (29244개소), 충전중 37304, 대기중 119491 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282200] 수집완료: 167066건 (29244개소), 충전중 38914, 대기중 117827 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282230] API error (zcode=41, page=2): timed out
+[202604282230] 수집완료: 26959건 (6955개소), 충전중 5427, 대기중 19157 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282300] 수집완료: 167066건 (29244개소), 충전중 42008, 대기중 114714 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604282330] 수집완료: 167068건 (29245개소), 충전중 42808, 대기중 113904 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-28.jsonl
+[202604290000] API error (zcode=41, page=2): timed out
+[202604290000] 수집완료: 26961건 (6956개소), 충전중 5627, 대기중 18932 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290030] 수집완료: 167067건 (29245개소), 충전중 43521, 대기중 112402 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290100] API error (zcode=41, page=2): timed out
+[202604290100] 수집완료: 26961건 (6956개소), 충전중 5651, 대기중 18889 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290130] API error (zcode=41, page=2): timed out
+[202604290130] 수집완료: 26961건 (6956개소), 충전중 5622, 대기중 18914 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290200] 수집완료: 167067건 (29245개소), 충전중 42765, 대기중 111123 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290230] API error (zcode=41, page=10): HTTP Error 502: Bad Gateway
+[202604290230] 수집완료: 106953건 (22415개소), 충전중 27078, 대기중 71181 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290300] 수집완료: 167067건 (29245개소), 충전중 43407, 대기중 112918 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290330] API error (zcode=41, page=3): timed out
+[202604290330] 수집완료: 36960건 (9649개소), 충전중 7994, 대기중 23933 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290400] 수집완료: 167067건 (29245개소), 충전중 42713, 대기중 113771 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290430] 수집완료: 167067건 (29245개소), 충전중 42296, 대기중 114385 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290500] API error (zcode=41, page=2): timed out
+[202604290500] 수집완료: 26961건 (6956개소), 충전중 5268, 대기중 19312 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290530] API error (zcode=41, page=2): timed out
+[202604290530] 수집완료: 26961건 (6956개소), 충전중 5155, 대기중 19479 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290600] API error (zcode=41, page=2): timed out
+[202604290600] 수집완료: 26961건 (6956개소), 충전중 4953, 대기중 19641 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290630] API error (zcode=41, page=2): timed out
+[202604290630] 수집완료: 26961건 (6956개소), 충전중 4736, 대기중 19922 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290700] API error (zcode=41, page=2): timed out
+[202604290700] 수집완료: 26961건 (6956개소), 충전중 4365, 대기중 20252 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290730] API error (zcode=41, page=2): HTTP Error 502: Bad Gateway
+[202604290730] API error (zcode=51, page=1): HTTP Error 502: Bad Gateway
+[202604290730] 수집완료: 9999건 (2601개소), 충전중 1255, 대기중 7643 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290800] API error (zcode=41, page=1): timed out
+[202604290800] 수집완료: 16962건 (4355개소), 충전중 2261, 대기중 13499 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290830] API error (zcode=41, page=2): timed out
+[202604290830] 수집완료: 26961건 (6956개소), 충전중 2937, 대기중 21727 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290900] 수집완료: 167067건 (29245개소), 충전중 21032, 대기중 135816 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604290930] 수집완료: 167067건 (29245개소), 충전중 19777, 대기중 137113 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291000] 수집완료: 167081건 (29246개소), 충전중 18910, 대기중 137989 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291030] 수집완료: 167081건 (29246개소), 충전중 18309, 대기중 137860 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291100] API error (zcode=41, page=2): timed out
+[202604291100] 수집완료: 26961건 (6955개소), 충전중 2326, 대기중 22255 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291130] 수집완료: 167086건 (29248개소), 충전중 17367, 대기중 139350 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291200] 수집완료: 167086건 (29248개소), 충전중 17015, 대기중 139826 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291430] API error (zcode=41, page=2): timed out
+[202604291430] 수집완료: 26961건 (6955개소), 충전중 2295, 대기중 22266 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291500] 수집완료: 167107건 (29254개소), 충전중 16310, 대기중 140578 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291530] 수집완료: 167133건 (29259개소), 충전중 16494, 대기중 140442 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291600] 수집완료: 167133건 (29259개소), 충전중 16820, 대기중 140128 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291630] 수집완료: 167133건 (29259개소), 충전중 17388, 대기중 139646 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291700] 수집완료: 167138건 (29260개소), 충전중 18275, 대기중 138702 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
+[202604291730] 수집완료: 167138건 (29260개소), 충전중 19583, 대기중 137432 → /Users/dustin/carsharing_demand_map/.cache/ev_status_log/2026-04-29.jsonl
