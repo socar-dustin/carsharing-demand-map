@@ -5467,6 +5467,12 @@ def main(team_id='gyeonggi'):
     with open(path1, "w") as f:
         f.write(html1)
     print(f"  -> {path1} ({len(html1):,} bytes)")
+    # 단일 팀이면 root index.html에도 복사 (GitHub Pages 루트가 stale해지지 않게)
+    root_index = os.path.join(OUTPUT_DIR, "index.html")
+    if path1 != root_index:
+        import shutil
+        shutil.copy2(path1, root_index)
+        print(f"  -> {root_index} (복사)")
     print(f"[완료] 대시보드가 생성되었습니다.")
 
 
@@ -5556,6 +5562,12 @@ def _build_html(team_id='gyeonggi'):
     with open(path, "w") as f:
         f.write(html)
     print(f"  -> {path} ({len(html):,} bytes)")
+    # 단일 팀이면 root index.html에도 복사 (GitHub Pages 루트가 stale해지지 않게)
+    root_index = os.path.join(OUTPUT_DIR, "index.html")
+    if path != root_index:
+        import shutil
+        shutil.copy2(path, root_index)
+        print(f"  -> {root_index} (복사)")
 
 
 def update_demand(team_id='gyeonggi'):
@@ -5676,7 +5688,12 @@ def update_zone(team_id='gyeonggi'):
     except Exception as e:
         print(f"  [경고] 사전가동률 조회 실패: {e}")
 
-    _build_html(team_id=team_id)
+    try:
+        _build_html(team_id=team_id)
+    except Exception as e:
+        import traceback
+        print(f"  [경고] HTML 생성 실패 (데이터 캐시는 정상 저장됨): {e}", file=__import__('sys').stderr)
+        traceback.print_exc(file=__import__('sys').stderr)
     print("[완료] 존/실적 업데이트 완료")
 
 
