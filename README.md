@@ -5,6 +5,7 @@
 - **Live**: <https://dustin2233.github.io/carsharing-demand-map/>
 - **Repository**: <https://github.com/dustin2233/carsharing-demand-map>
 - **Owner**: Dustin (`dustin@socar.kr`), 경기강원사업팀
+- **🛠️ 구현 가이드 (클로닝용)**: [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md) — 함수 시그니처·계산 공식·SQL 패턴·JSON 스키마·LLM 프롬프트까지 풀 디테일
 
 ---
 
@@ -477,7 +478,18 @@ iframe / 데이터 재사용 어떤 방식이든, **순수 정적**인 기능과
 
 ### 9.4 동일 BQ 쿼리 재사용
 
-스키마·지표 정의를 함께 쓰고 싶다면 `update.py`의 `query_*()` 함수들이 가장 좋은 참조점이다 — 모든 쿼리가 `team_id`만 받아 `_region1_sql()` / polygon 필터 / 3개월 윈도우를 일관되게 적용한다.
+스키마·지표 정의를 함께 쓰고 싶다면 `update.py`의 `query_*()` 함수들이 가장 좋은 참조점이다 — 모든 쿼리가 `team_id`만 받아 `_region1_sql()` / polygon 필터 / 3개월 윈도우를 일관되게 적용한다. **함수별 SQL 패턴·필터 조건·인덱스 정리는 [`docs/IMPLEMENTATION.md §3`](docs/IMPLEMENTATION.md#3-bq-쿼리-layer-query_)** 참조.
+
+### 9.5 알고리즘·계산 공식 클로닝
+
+동료 작업물에 시뮬레이션·Gap·재진입·성장 분류 같은 분석 로직을 그대로 옮기려면 [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md) 의:
+- **§4** 분석 함수 4개 의사코드
+- **§5** 존 개설 시뮬레이션 13단계 + 모든 계산 공식
+- **§6** LLM 평가 프롬프트 풀텍스트
+- **§11** 핵심 상수·매직넘버 사전 (40개)
+- **§12** 클로닝 시 자주 막히는 함정 8가지
+
+이 셋이면 코드를 보지 않고도 같은 로직을 재구현할 수 있다.
 
 핵심 함수 (line 번호 참고용, 2026-05-12 기준):
 - `query_access` (192), `query_reservation` (227), `query_dtod` (274)
